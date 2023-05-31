@@ -1,0 +1,34 @@
+class Job:
+    def __init__(self, id, dead, profit):
+        self.id = id
+        self.dead = dead
+        self.profit = profit
+
+def cmp(job):
+    return job.profit
+
+def jobScheduling(arr):
+    arr.sort(key=cmp, reverse=True)
+    tot_job = 0
+    res = 0
+    slot = [False] * len(arr)
+
+    for i in range(len(arr)):
+        for j in range(arr[i].dead - 1, -1, -1):
+            if not slot[j]:
+                res += arr[i].profit
+                tot_job += 1
+                slot[j] = True
+                break
+    
+    return [tot_job, res]
+
+n = int(input())
+arr = []
+for _ in range(n):
+    x, y, z = map(int, input().split())
+    arr.append(Job(x, y, z))
+ans = jobScheduling(arr)
+print(ans[0], ans[1])
+
+//https://www.youtube.com/watch?v=p64E-XiLoIQ&ab_channel=AkshayAnil
